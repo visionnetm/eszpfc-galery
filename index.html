@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESZP FC - Csapatunk</title>
+    <meta name="description" content="ESZP FC hivatalos csapat oldal - Játékosaink, történetünk, eredményeink">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, hsl(220, 40%, 6%), hsl(220, 35%, 12%));
+            color: hsl(210, 100%, 98%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+            animation: fadeInZoom 0.7s ease-out;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.5));
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: hsl(210, 20%, 70%);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Players Section */
+        .players-section {
+            padding: 3rem 1rem;
+        }
+
+        .players-section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: bold;
+        }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .player-card {
+            background: linear-gradient(180deg, hsl(220, 35%, 10%), hsl(220, 30%, 8%));
+            border: 1px solid hsl(220, 30%, 18%);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px hsla(220, 40%, 3%, 0.5);
+            animation: fadeInUp 0.7s ease-out backwards;
+        }
+
+        .player-card:hover {
+            border-color: hsl(210, 100%, 60%);
+            box-shadow: 0 0 40px hsla(210, 100%, 60%, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .player-image-container {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            background: linear-gradient(135deg, hsl(210, 100%, 60%), hsl(200, 100%, 65%));
+        }
+
+        .player-card:hover .player-image {
+            transform: scale(1.1);
+        }
+
+        .player-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .player-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, hsl(210, 100%, 60%), hsl(200, 100%, 65%));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: hsl(220, 40%, 6%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .player-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, hsl(220, 40%, 6%) 0%, hsla(220, 40%, 6%, 0.6) 50%, transparent 100%);
+            opacity: 0.7;
+        }
+
+        .player-info {
+            padding: 1rem;
+        }
+
+        .player-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .player-card:hover .player-name {
+            color: hsl(210, 100%, 60%);
+        }
+
+        .player-position {
+            color: hsl(210, 20%, 70%);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Team Photo Section */
+        .team-section {
+            padding: 4rem 1rem;
+        }
+
+        .team-photo-container {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .team-photo {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .team-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, hsla(220, 40%, 6%, 0.8) 0%, transparent 50%);
+        }
+
+        .team-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+        }
+
+        .team-caption h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-caption p {
+            font-size: 1.125rem;
+            color: hsl(210, 20%, 70%);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 1rem;
+            border-top: 1px solid hsl(220, 30%, 18%);
+            text-align: center;
+            color: hsl(210, 20%, 70%);
+        }
+
+        /* Animations */
+        @keyframes fadeInZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(2rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .logo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .players-section h2 {
+                font-size: 2rem;
+            }
+
+            .team-caption h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Stagger animation for cards */
+        .player-card:nth-child(1) { animation-delay: 0.05s; }
+        .player-card:nth-child(2) { animation-delay: 0.1s; }
+        .player-card:nth-child(3) { animation-delay: 0.15s; }
+        .player-card:nth-child(4) { animation-delay: 0.2s; }
+        .player-card:nth-child(5) { animation-delay: 0.25s; }
+        .player-card:nth-child(6) { animation-delay: 0.3s; }
+        .player-card:nth-child(7) { animation-delay: 0.35s; }
+        .player-card:nth-child(8) { animation-delay: 0.4s; }
+        .player-card:nth-child(9) { animation-delay: 0.45s; }
+        .player-card:nth-child(10) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="logo-container">
+            <!-- Cseréld le a src-t a saját logódra -->
+            <img class="logo" src="eszp-logo.png" alt="ESZP FC Logo">
+        </div>
+            <h1>ESZP FC</h1>
+            <p>Gyűjtőoldal</p>
+        </div>
+    </section>
+
+    <!-- Players Grid -->
+    <section class="players-section">
+        <div class="container">
+            <h2>kártyák</h2>
+            <div class="players-grid" id="playersGrid"></div>
+        </div>
+    </section>
+
+    <!-- Team Photo -->
+    <section class="team-section">
+        <div class="container">
+            <div class="team-photo-container">
+                <!-- Cseréld le ezt a src-t a saját csapatképedre -->
+                <img class="team-photo" src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1920&h=1080&fit=crop" alt="ESZP FC Csapat">
+                <div class="team-overlay"></div>
+                <div class="team-caption">
+                    <h3>Együtt vagyunk erősek</h3>
+                    <p>Az ESZP FC büszke csapata - Bajnokok 2024</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2024 ESZP FC. Minden jog fenntartva.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Játékosok adatai
+        const players = [
+            { name: "Kovács Dániel", position: "Kapus", number: 1, image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&h=500&fit=crop" },
+            { name: "Nagy Balázs", position: "Hátvéd", number: 2, image: "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?w=500&h=500&fit=crop" },
+            { name: "Szabó Márk", position: "Hátvéd", number: 3, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop" },
+            { name: "Tóth Ádám", position: "Hátvéd", number: 4, image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&h=500&fit=crop" },
+            { name: "Kiss Levente", position: "Középpályás", number: 5, image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=500&fit=crop" },
+            { name: "Horváth Máté", position: "Középpályás", number: 6, image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&h=500&fit=crop" },
+            { name: "Varga Bence", position: "Középpályás", number: 7, image: "https://images.unsplash.com/photo-1506863530036-1efeddceb993?w=500&h=500&fit=crop" },
+            { name: "Molnár Viktor", position: "Középpályás", number: 8, image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=500&h=500&fit=crop" },
+            { name: "Lakatos Zsolt", position: "Csatár", number: 9, image: "https://images.unsplash.com/photo-1528892952291-009c663ce843?w=500&h=500&fit=crop" },
+            { name: "Papp Dávid", position: "Csatár", number: 10, image: "https://images.unsplash.com/photo-1504593811423-6dd665756598?w=500&h=500&fit=crop" },
+            { name: "Simon Gábor", position: "Csatár", number: 11, image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=500&h=500&fit=crop" },
+            { name: "Juhász Richárd", position: "Hátvéd", number: 12, image: "https://images.unsplash.com/photo-1541271696563-3be2f555fc4e?w=500&h=500&fit=crop" },
+            { name: "Balogh Tamás", position: "Középpályás", number: 13, image: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=500&h=500&fit=crop" },
+            { name: "Farkas Krisztián", position: "Középpályás", number: 14, image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=500&h=500&fit=crop" },
+            { name: "Németh Attila", position: "Csatár", number: 15, image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&h=500&fit=crop" },
+            { name: "Szűcs Patrik", position: "Hátvéd", number: 16, image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&h=500&fit=crop" },
+            { name: "Vincze Roland", position: "Középpályás", number: 17, image: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=500&h=500&fit=crop" },
+            { name: "Takács Norbert", position: "Csatár", number: 18, image: "https://images.unsplash.com/photo-1474176857210-7287d38d27c6?w=500&h=500&fit=crop" },
+            { name: "Oláh Ferenc", position: "Hátvéd", number: 19, image: "https://images.unsplash.com/photo-1503235930437-8c6293ba41f5?w=500&h=500&fit=crop" },
+            { name: "Erdős Péter", position: "Középpályás", number: 20, image: "https://images.unsplash.com/photo-1522556189639-b150ed9c4330?w=500&h=500&fit=crop" }
+        ];
+
+        // Játékos kártyák generálása
+        const playersGrid = document.getElementById('playersGrid');
+        players.forEach(player => {
+            const card = document.createElement('div');
+            card.className = 'player-card';
+            card.innerHTML = `
+                <div class="player-image-container">
+                    <img class="player-image" src="${player.image}" alt="${player.name}">
+                    <div class="player-number">${player.number}</div>
+                    <div class="player-overlay"></div>
+                </div>
+                <div class="player-info">
+                    <h3 class="player-name">${player.name}</h3>
+                    <p class="player-position">${player.position}</p>
+                </div>
+            `;
+            playersGrid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
